@@ -16,7 +16,19 @@
     />
   </head>
   <body>
-    <div class="background-glow"></div>
+    <div class="background-bubbles">
+      <span style="--i: 11"></span><span style="--i: 12"></span
+      ><span style="--i: 24"></span> <span style="--i: 10"></span
+      ><span style="--i: 14"></span><span style="--i: 23"></span>
+      <span style="--i: 18"></span><span style="--i: 16"></span
+      ><span style="--i: 19"></span> <span style="--i: 20"></span
+      ><span style="--i: 22"></span><span style="--i: 25"></span>
+      <span style="--i: 18"></span><span style="--i: 21"></span
+      ><span style="--i: 15"></span> <span style="--i: 13"></span
+      ><span style="--i: 26"></span><span style="--i: 17"></span>
+      <span style="--i: 13"></span><span style="--i: 28"></span>
+    </div>
+
     <div class="main-container">
       <header class="app-header">
         <img
@@ -28,63 +40,67 @@
         <p>I can answer questions about our services and policies.</p>
       </header>
 
-      <div id="chat-container" class="chat-container">
+      <div class="chat-container">
         <div id="chat-log" class="chat-log">
           <!-- Chat messages will be dynamically inserted here -->
         </div>
 
-        <div class="suggestion-chips-container">
-          <div id="suggestion-chips" class="suggestion-chips">
-            <!-- AI-generated suggestion chips will be inserted here -->
+        <!-- NEW/CORRECTED STRUCTURE: Wrap suggestions and input in one div -->
+        <div class="chat-input-section">
+          <div class="suggestion-chips-container">
+            <div id="suggestion-chips" class="suggestion-chips">
+              <!-- AI-generated suggestion chips will be inserted here -->
+            </div>
           </div>
-        </div>
 
-        <form id="chat-form" class="input-area">
-          <button type="button" class="icon-button add-button">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          <form id="chat-form" class="input-area">
+            <button type="button" class="icon-button add-button">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 5v14m-7-7h14"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+            <input
+              type="text"
+              id="user-input"
+              placeholder="Ask anything ..."
+              autocomplete="off"
+            />
+            <button
+              type="submit"
+              id="send-button"
+              class="icon-button send-button"
             >
-              <path
-                d="M12 5v14m-7-7h14"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-          </button>
-          <input
-            type="text"
-            id="user-input"
-            placeholder="Ask anything ..."
-            autocomplete="off"
-          />
-          <button
-            type="submit"
-            id="send-button"
-            class="icon-button send-button"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M22 2L11 13M22 2L15 22l-4-9-9-4L22 2z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-          </button>
-        </form>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22 2L11 13M22 2L15 22l-4-9-9-4L22 2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+        <!-- End of chat-input-section -->
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
