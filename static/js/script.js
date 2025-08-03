@@ -3,17 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const userInput = document.getElementById("user-input");
   const chatLog = document.getElementById("chat-log");
   const suggestionChipsContainer = document.getElementById("suggestion-chips");
+  const sendButton = document.getElementById("send-button");
 
-  // --- Function to append a message to the chat log ---
+  userInput.addEventListener("input", () => {
+    sendButton.classList.toggle("active", userInput.value.trim().length > 0);
+  });
+
   const appendMessage = (text, sender) => {
     const messageElement = document.createElement("div");
     messageElement.classList.add("chat-message", `${sender}-message`);
     messageElement.textContent = text;
     chatLog.appendChild(messageElement);
-    chatLog.scrollTop = chatLog.scrollHeight; // Auto-scroll to the bottom
+    chatLog.scrollTop = chatLog.scrollHeight;
   };
 
-  // --- Function to show/hide typing indicator ---
   const showTypingIndicator = () => {
     const indicator = document.createElement("div");
     indicator.classList.add("chat-message", "bot-message", "typing-indicator");
@@ -29,48 +32,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // --- Handle form submission ---
   chatForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const question = userInput.value.trim();
     if (!question) return;
-
-    // 1. Display user's message
     appendMessage(question, "user");
-    userInput.value = ""; // Clear input field
+    userInput.value = "";
+    sendButton.classList.remove("active");
+    suggestionChipsContainer.style.display = "none"; // Hide chips after first question
 
-    // 2. Show typing indicator
     showTypingIndicator();
-
-    // 3. Send question to backend and get response
     try {
       const response = await fetch("/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: question }),
       });
-
       hideTypingIndicator();
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const data = await response.json();
-      appendMessage(data.answer, "bot");
+      appendMessage(data.answer || data.error, "bot");
     } catch (error) {
-      console.error("Fetch error:", error);
       hideTypingIndicator();
       appendMessage("Sorry, something went wrong. Please try again.", "bot");
     }
   });
 
-  // --- Fetch and display AI-generated suggestions ---
+  // --- NEW: FUNCTION TO FETCH AND DISPLAY SUGGESTIONS ---
   const fetchSuggestions = async () => {
     try {
       const response = await fetch("/get-suggestions");
       const suggestions = await response.json();
-
       suggestionChipsContainer.innerHTML = ""; // Clear old chips
       suggestions.forEach((text) => {
         const chip = document.createElement("button");
@@ -78,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         chip.textContent = text;
         chip.onclick = () => {
           userInput.value = text;
+          userInput.dispatchEvent(new Event("input")); // Activate send button
           chatForm.dispatchEvent(
             new Event("submit", { cancelable: true, bubbles: true })
           );
@@ -86,10 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       console.error("Error fetching suggestions:", error);
+      suggestionChipsContainer.style.display = "none"; // Hide on error
     }
   };
 
-  // --- Initial setup ---
+  // --- INITIAL SETUP ---
   appendMessage("Hello! I'm SupportBot. How can I assist you today?", "bot");
-  fetchSuggestions();
+  fetchSuggestions(); // Call the new function on page load
 });
