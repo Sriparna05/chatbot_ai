@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SupportBot Assistance</title>
+    <title>SupportBot Chat</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
@@ -24,35 +24,19 @@
           alt="App Icon"
           class="app-icon"
         />
-        <h1>Good to See You!</h1>
-        <h2>How Can I be an Assistance?</h2>
-        <p>I'm available 24/7 for you, ask me anything.</p>
+        <h2>Chat with SupportBot</h2>
+        <p>I can answer questions about our services and policies.</p>
       </header>
 
-      <div class="chat-interface">
-        <div class="pro-plan-bar">
-          <span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M13 1L4 14h9l-1 9 9-13H12l1-9z"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Unlock more features with the Pro plan.
-          </span>
-          <span class="extensions-status">
-            <span class="green-dot"></span>
-            Active extensions
-          </span>
+      <div id="chat-container" class="chat-container">
+        <div id="chat-log" class="chat-log">
+          <!-- Chat messages will be dynamically inserted here -->
+        </div>
+
+        <div class="suggestion-chips-container">
+          <div id="suggestion-chips" class="suggestion-chips">
+            <!-- AI-generated suggestion chips will be inserted here -->
+          </div>
         </div>
 
         <form id="chat-form" class="input-area">
@@ -79,7 +63,11 @@
             placeholder="Ask anything ..."
             autocomplete="off"
           />
-          <button type="button" class="icon-button voice-button">
+          <button
+            type="submit"
+            id="send-button"
+            class="icon-button send-button"
+          >
             <svg
               width="20"
               height="20"
@@ -88,7 +76,7 @@
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2"
+                d="M22 2L11 13M22 2L15 22l-4-9-9-4L22 2z"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
@@ -97,17 +85,6 @@
             </svg>
           </button>
         </form>
-
-        <div class="suggestion-chips">
-          <button class="chip">Any advice for me?</button>
-          <button class="chip">Some youtube video idea</button>
-          <button class="chip">Life lessons from kratos</button>
-          <button class="chip more-chip">...</button>
-        </div>
-      </div>
-
-      <div id="response-container" class="response-container">
-        <!-- AI response will be injected here by JavaScript -->
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
