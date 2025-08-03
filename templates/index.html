@@ -16,17 +16,18 @@
     />
   </head>
   <body>
-    <div class="background-bubbles">
-      <span style="--i: 11"></span><span style="--i: 12"></span
-      ><span style="--i: 24"></span> <span style="--i: 10"></span
-      ><span style="--i: 14"></span><span style="--i: 23"></span>
-      <span style="--i: 18"></span><span style="--i: 16"></span
-      ><span style="--i: 19"></span> <span style="--i: 20"></span
-      ><span style="--i: 22"></span><span style="--i: 25"></span>
-      <span style="--i: 18"></span><span style="--i: 21"></span
-      ><span style="--i: 15"></span> <span style="--i: 13"></span
-      ><span style="--i: 26"></span><span style="--i: 17"></span>
-      <span style="--i: 13"></span><span style="--i: 28"></span>
+    <!-- NEW: A dedicated wrapper for the lively background effect -->
+    <div class="background-wrapper">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
     </div>
 
     <div class="main-container">
@@ -45,7 +46,6 @@
           <!-- Chat messages will be dynamically inserted here -->
         </div>
 
-        <!-- NEW/CORRECTED STRUCTURE: Wrap suggestions and input in one div -->
         <div class="chat-input-section">
           <div class="suggestion-chips-container">
             <div id="suggestion-chips" class="suggestion-chips">
@@ -100,7 +100,6 @@
             </button>
           </form>
         </div>
-        <!-- End of chat-input-section -->
       </div>
     </div>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>

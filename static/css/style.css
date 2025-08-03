@@ -1,15 +1,13 @@
-/* --- ROOT VARIABLES FOR THE AURA DESIGN --- */
+/* --- ROOT VARIABLES --- */
 :root {
-    --background-start: #0f0c29;
-    --background-mid: #0c0a1d;
-    --background-end: #000000;
+    --background-color: #0d0d0d;
     --text-primary: #f0f0f0;
     --text-secondary: #a0a0b0;
-    --glass-bg: rgba(26, 28, 36, 0.4);
+    --glass-bg: rgba(20, 20, 22, 0.4);
     --glass-border: rgba(255, 255, 255, 0.1);
     --user-msg-bg: linear-gradient(135deg, #005cbb, #3c1a98);
     --bot-msg-bg: rgba(58, 59, 60, 0.7);
-    --input-bg: rgba(0, 0, 0, 0.2);
+    --input-bg: rgba(0, 0, 0, 0.3);
     --glow-color: rgba(138, 43, 226, 0.7);
     --font-family: 'Inter', sans-serif;
 }
@@ -18,28 +16,12 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: scale(0.98);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes rise {
-    0% {
-        transform: translateY(100vh) scale(0);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(-10vh) scale(1);
-        opacity: 0;
+        transform: scale(1);
     }
 }
 
@@ -56,7 +38,21 @@
     }
 }
 
-/* --- GENERAL BODY AND BUBBLE BACKGROUND --- */
+@keyframes animate-circles {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+/* --- GENERAL BODY AND BACKGROUND --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -66,54 +62,128 @@
 body {
     font-family: var(--font-family);
     color: var(--text-primary);
-    background: radial-gradient(ellipse at bottom, var(--background-start) 0%, var(--background-mid) 50%, var(--background-end) 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: var(--background-color);
     min-height: 100vh;
     overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding: 20px;
 }
 
-.background-bubbles span {
+.background-wrapper {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.circle {
     position: absolute;
-    bottom: -100px;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 50%;
-    animation: rise 15s linear infinite;
-    animation-delay: calc(1s * var(--i));
-    left: calc(5% * var(--i));
-}
-
-.background-bubbles span:nth-child(even) {
+    display: block;
+    list-style: none;
     width: 20px;
     height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    animation: animate-circles 25s linear infinite;
+    bottom: -150px;
 }
 
-.background-bubbles span:nth-child(3n) {
+.circle:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circle:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circle:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circle:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circle:nth-child(6) {
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
     background: rgba(138, 43, 226, 0.1);
+}
+
+.circle:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circle:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circle:nth-child(9) {
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circle:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
 }
 
 /* --- MAIN CONTAINER --- */
 .main-container {
     width: 100%;
     max-width: 700px;
-    height: 90vh;
-    max-height: 800px;
+    max-height: 85vh;
     display: flex;
     flex-direction: column;
-    z-index: 1;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
     animation: fadeIn 0.8s ease-out forwards;
+    /* --- ENHANCED GLOW --- Adds a subtle colored aura and a depth shadow */
+    box-shadow: 0 0 25px -5px rgba(138, 43, 226, 0.15), 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* --- HEADER --- */
+/* --- HEADER AND CHAT LAYOUT --- */
 .app-header {
     text-align: center;
     padding: 24px 0;
@@ -139,7 +209,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* --- CHAT CONTAINER AND LOG (THE CORE FIX) --- */
 .chat-container {
     flex-grow: 1;
     display: flex;
@@ -149,9 +218,7 @@ body {
 
 .chat-log {
     flex-grow: 1;
-    /* This is key: it takes up all available vertical space */
     overflow-y: auto;
-    /* It scrolls independently */
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -171,6 +238,7 @@ body {
     border-radius: 10px;
 }
 
+/* --- ENHANCED GLOW ON CHAT MESSAGES --- */
 .chat-message {
     padding: 12px 16px;
     border-radius: 18px;
@@ -178,6 +246,9 @@ body {
     line-height: 1.6;
     word-wrap: break-word;
     animation: fadeIn 0.5s ease-out forwards;
+    /* --- NEW: Default subtle shadow for all messages --- */
+    box-shadow: 0 4px 15px -5px rgba(0, 0, 0, 0.4);
+    transition: box-shadow 0.3s ease;
 }
 
 .user-message {
@@ -194,17 +265,13 @@ body {
     border-bottom-left-radius: 4px;
 }
 
-/* --- NEW WRAPPER FOR INPUT SECTION --- */
 .chat-input-section {
     flex-shrink: 0;
-    /* Prevents this section from shrinking */
     padding-top: 10px;
     border-top: 1px solid var(--glass-border);
     background: var(--glass-bg);
-    /* Give it a subtle background to separate it */
 }
 
-/* --- SUGGESTION CHIPS --- */
 .suggestion-chips-container {
     padding: 0 16px 12px 16px;
 }
@@ -225,15 +292,18 @@ body {
     font-size: 0.875rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    /* --- NEW: Add a very faint default shadow to chips --- */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .chip:hover {
     background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
     transform: translateY(-2px);
+    /* --- ENHANCED: A more prominent glow on hover --- */
+    box-shadow: 0 0 12px -2px var(--glow-color), 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* --- INPUT AREA --- */
 .input-area {
     display: flex;
     align-items: center;
@@ -243,10 +313,13 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     transition: all 0.3s ease;
+    /* --- NEW: Add a default shadow to the input area for depth --- */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .input-area:focus-within {
     border-color: var(--glow-color);
+    /* --- ENHANCED: A stronger outer glow on focus --- */
     box-shadow: 0 0 15px -2px var(--glow-color);
 }
 
@@ -289,7 +362,6 @@ body {
     filter: drop-shadow(0 0 5px var(--glow-color));
 }
 
-/* --- TYPING INDICATOR --- */
 .typing-indicator {
     display: flex;
     align-items: center;
@@ -310,8 +382,4 @@ body {
 
 .typing-indicator span:nth-child(2) {
     animation-delay: -0.16s;
-}
-
-.typing-indicator span:nth-child(3) {
-    animation-delay: 0s;
 }
